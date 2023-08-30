@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import "./App.css"
+
 
 function App() {
   
@@ -25,28 +27,43 @@ function App() {
     listaTarefas[index].status = !status;
     setListaTarefas([...listaTarefas]);
   }
-
+  
+  
   useEffect( ()=>{
     setTarefa({id: "", texto:""});
   },[listaTarefas])
   
   return (
    <>
-   <header>
-    <h1>Trabalhos Avaliativos</h1>
+   <div className="geral">
+   <div className="caixa">
+   <header className="texto">
+    <h1>To do List</h1>
+    <h2>Trabalhos Avaliativos</h2>
    </header>
-      <div>
-        <input type="text" name="tarefa" placeholder="Digite sua tarefa" value={tarefa.texto} onChange={(e) => setTarefa( {id: Math.random(),texto:e.target.value, status: false})}/>
-        <button onClick={addTarefa}>Adicionar</button>
+   </div>
+   
+      <div className="texto">
+        <input className="tarefa" type="text" name="tarefa" placeholder="Digite seus trabalhos" value={tarefa.texto} onChange={(e) => setTarefa( {id: Math.random(),texto:e.target.value, status: false})}/>
+        <button className="adiciona" onClick={addTarefa}> ✚ </button>
       
         </div>
-        <div>
+        <div className="nome">
           <ul>
               {listaTarefas.map((item, index)=>(
-                <li key={item.id}>{item.texto} <button onClick={()=> statusTarefa(item.id, item.status)}>{item.status ? "Concluída":"Não Concluída"}</button> <button onClick={()=> excluirTarefa(item.id)} >Excluir</button></li>
+                <li className ="itens" key={index}>{item.texto} <button onClick={()=> statusTarefa(item.id, item.status)}>{item.status ? "☑":"⊗"}</button> <button onClick={()=> excluirTarefa(item.id)} >🗑️</button></li>
               ))}
           </ul>
+          <ul>
+              <button className="botao">Salvar Lista</button>
+              
+          </ul>
         </div>
+        <header className="caixa1">
+       <h2>*️⃣  📎</h2>
+        </header>
+   </div>
+   
    </>
   );
 }
