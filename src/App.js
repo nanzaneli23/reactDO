@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 function App() {
   
   const[ listaTarefas, setListaTarefas ] = useState([]);
-  const[tarefa, setTarefa] = useState({id:'' , texto:""});
+  const[tarefa, setTarefa] = useState({id:'' , texto:"", status:""});
 
   function addTarefa()
   {
@@ -19,6 +19,13 @@ function App() {
      setListaTarefas( novaLista );
   }
 
+  function statusTarefa(id , status)
+  {
+    const index = listaTarefas.findIndex((tarefa) => tarefa.id === id);
+    listaTarefas[index].status = !status;
+    setListaTarefas([...listaTarefas]);
+  }
+
   useEffect( ()=>{
     setTarefa({id: "", texto:""});
   },[listaTarefas])
@@ -29,14 +36,14 @@ function App() {
     <h1>Trabalhos Avaliativos</h1>
    </header>
       <div>
-        <input type="text" name="tarefa" placeholder="Digite sua tarefa" value={tarefa.texto} onChange={(e) => setTarefa( {id: Math.random(),texto:e.target.value})}/>
+        <input type="text" name="tarefa" placeholder="Digite sua tarefa" value={tarefa.texto} onChange={(e) => setTarefa( {id: Math.random(),texto:e.target.value, status: false})}/>
         <button onClick={addTarefa}>Adicionar</button>
       
         </div>
         <div>
           <ul>
               {listaTarefas.map((item, index)=>(
-                <li key={item.id}>{item.texto} <button onClick={()=> excluirTarefa(item.id)} >Excluir</button></li>
+                <li key={item.id}>{item.texto} <button onClick={()=> statusTarefa(item.id, item.status)}>{item.status ? "Concluída":"Não Concluída"}</button> <button onClick={()=> excluirTarefa(item.id)} >Excluir</button></li>
               ))}
           </ul>
         </div>
